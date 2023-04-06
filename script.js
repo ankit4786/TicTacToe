@@ -1,14 +1,16 @@
-console.log("welcome to TicTacToe");
+console.log("Welcome to Tic Tac Toe");
 let music = new Audio("music.mp3");
 let audioTurn = new Audio("ting.mp3");
 let gameover = new Audio("gameover.mp3");
 let turn = "X";
-let gameOver = false;
+let isgameover = false;
+
+// Function to change the turn
 const changeTurn = () => {
   return turn === "X" ? "0" : "X";
 };
 
-//funtion to check for a win
+// Function to check for a win
 const checkWin = () => {
   let boxtext = document.getElementsByClassName("boxtext");
   let wins = [
@@ -28,12 +30,11 @@ const checkWin = () => {
       boxtext[e[0]].innerText !== ""
     ) {
       document.querySelector(".info").innerText =
-        boxtext[e[0]].innerText + "WoN";
-      gameOver = true;
+        boxtext[e[0]].innerText + " Won";
+      isgameover = true;
       document
         .querySelector(".imgbox")
         .getElementsByTagName("img")[0].style.width = "200px";
-
       document.querySelector(
         ".line"
       ).style.transform = `translate(${e[3]}vw, ${e[4]}vw) rotate(${e[5]}deg)`;
@@ -42,8 +43,8 @@ const checkWin = () => {
   });
 };
 
-//Game Logic
-music.play();
+// Game Logic
+// music.play()
 let boxes = document.getElementsByClassName("box");
 Array.from(boxes).forEach((element) => {
   let boxtext = element.querySelector(".boxtext");
@@ -53,22 +54,24 @@ Array.from(boxes).forEach((element) => {
       turn = changeTurn();
       audioTurn.play();
       checkWin();
-      if (!gameOver) {
+      if (!isgameover) {
         document.getElementsByClassName("info")[0].innerText =
           "Turn for " + turn;
       }
     }
   });
 });
-//add on click listener to reset
+
+// Add onclick listener to reset button
 reset.addEventListener("click", () => {
   let boxtexts = document.querySelectorAll(".boxtext");
   Array.from(boxtexts).forEach((element) => {
-    element.innerText = " ";
+    element.innerText = "";
   });
   turn = "X";
-  gameOver = false;
-  document.getElementsByClassName("info")[0].innerText = "Turn for  " + turn;
+  isgameover = false;
+  document.querySelector(".line").style.width = "0vw";
+  document.getElementsByClassName("info")[0].innerText = "Turn for " + turn;
   document.querySelector(".imgbox").getElementsByTagName("img")[0].style.width =
     "0px";
 });
